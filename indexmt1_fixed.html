@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Medicine Tracker Pro</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .page-container {
+      min-height: 100vh;
+      display: none;
+    }
+    
+    .page-container.active {
+      display: block;
+    }
+
+    /* Enhanced Login Page */
+    .login-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-header h2 {
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Navigation */
+    .navigation-wrap {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .navigation-wrap.scroll-on {
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                  url('https://images.unsplash.com/photo-1588776814546-4c183862d4b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover;
+      color: white;
+      padding: 150px 0;
+      text-align: center;
+    }
+
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero-section .lead {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* Enhanced Cards */
+    .feature-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      margin: 15px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    /* Medicine Tracker Page */
+    .tracker-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      margin: 20px 0;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    /* Enhanced Form */
+    .medicine-form {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Status Badges */
+    .status-taken {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .status-pending {
+      background: linear-gradient(135deg, #dc3545, #fd7e14);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Enhanced Buttons */
+    .btn-enhanced {
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-enhanced:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Loading Spinner */
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Alert Messages */
+    .alert-custom {
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Stats Cards */
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-section h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-section .lead {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Chart Container */
+    .chart-container {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="loginPage" class="page-container active">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <i class="fas fa-pills fa-3x mb-3" style="color: #667eea;"></i>
+        <h2>Medicine Tracker Pro</h2>
+        <p class="text-muted" id="authPrompt">Sign in to your account</p>
+      </div>
+      
+      <div id="loginAlert"></div>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input type="text" id="username" class="form-control" placeholder="Username" required />
+          </div>
+        </div>
+        
+        <div class="form-group" id="emailGroup" style="display:none;"> <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+            </div>
+            <input type="email" id="email" class="form-control" placeholder="Email (optional)" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+            </div>
+            <input type="password" id="password" class="form-control" placeholder="Password" required />
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block btn-enhanced" id="loginSubmitBtn">
+          <i class="fas fa-sign-in-alt mr-2"></i>Sign In
+        </button>
+      </form>
+      
+      <div class="text-center mt-3">
+        <small class="text-muted" id="registerToggleContainer">Don't have an account? <a href="#" id="registerToggle">Register</a></small>
+        <small class="text-muted" style="display:none;" id="loginToggleContainer">Already have an account? <a href="#" id="loginToggle">Sign In</a></small>
+      </div>
+      
+      <div class="loading" id="loginLoading">
+        <div class="spinner"></div>
+        <p class="mt-2">Signing in...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="mainPage" class="page-container">
+  <nav class="navbar navbar-expand-lg navigation-wrap fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-pills mr-2"></i>MedicineTracker Pro
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#stats">Stats</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="logout()">
+              <i class="fas fa-sign-out-alt mr-1"></i>Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="container">
+      <h1>Stay on Track with Your Medications</h1>
+      <p class="lead">Never miss a dose with our intelligent medicine tracker</p>
+      <button id="getStartedBtn" class="btn btn-primary btn-lg btn-enhanced">
+        <i class="fas fa-rocket mr-2"></i>Get Started
+      </button>
+    </div>
+  </section>
+
+  <section id="features" class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="feature-card text-center">
+            <i class="fas fa-bell fa-3x mb-3" style="color: #667eea;"></i>
+            <h4>Smart Reminders</h4>
+            <p>Get timely notifications and never miss your medication schedule.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card text-center">
+            <i class="fas fa-chart-line fa-3x mb-3" style="color: #28a745;"></i>
+            <h4>Track Progress</h4>
+            <p>Monitor your medication adherence with detailed analytics and reports.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card text-center">
+            <i class="fas fa-shield-alt fa-3x mb-3" style="color: #dc3545;"></i>
+            <h4>Secure & Private</h4>
+            <p>Your health data is encrypted and stored securely in the cloud.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stats" class="py-5" style="background: rgba(255,255,255,0.1);">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div id="count1" class="stat-number">0</div>
+            <p>Medicines Tracked</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div id="count2" class="stat-number">0</div>
+            <p>Doses Taken</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div id="count3" class="stat-number">0</div>
+            <p>Adherence Rate</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div id="count4" class="stat-number">1</div>
+            <p>Active Users</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="trackerPage" class="page-container">
+  <nav class="navbar navbar-expand-lg navigation-wrap fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#" onclick="goToMainPage()">
+        <i class="fas fa-pills mr-2"></i>MedicineTracker Pro
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavTracker">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavTracker">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="#" onclick="goToMainPage()">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#medicineSection">Medicines</a></li>
+          <li class="nav-item"><a class="nav-link" href="#historySection">History</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="logout()">
+              <i class="fas fa-sign-out-alt mr-1"></i>Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="padding-top: 100px;">
+    <div id="trackerAlert"></div>
+
+    <div class="tracker-container">
+      <h3><i class="fas fa-calendar-day mr-2"></i>Today's Schedule</h3>
+      <div id="todaySchedule" class="row"></div>
+    </div>
+
+    <div class="medicine-form">
+      <h4><i class="fas fa-plus-circle mr-2"></i>Add New Medicine</h4>
+      <form id="medicineForm">
+        <div class="form-row">
+          <div class="col-md-3 mb-2">
+            <input type="text" id="medicineName" class="form-control" placeholder="Medicine Name" required />
+          </div>
+          <div class="col-md-2 mb-2">
+            <input type="text" id="medicineDose" class="form-control" placeholder="Dose" required />
+          </div>
+          <div class="col-md-2 mb-2">
+            <input type="time" id="medicineTime" class="form-control" required />
+          </div>
+          <div class="col-md-2 mb-2">
+            <select id="medicineFrequency" class="form-control">
+              <option value="daily">Daily</option>
+              <option value="twice-daily">Twice Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="as-needed">As Needed</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-2">
+            <button type="submit" class="btn btn-success btn-enhanced btn-block">
+              <i class="fas fa-plus mr-1"></i>Add Medicine
+            </button>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-12">
+            <textarea id="medicineNotes" class="form-control mt-2" placeholder="Notes (optional)" rows="2"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div id="medicineSection" class="tracker-container">
+      <h4><i class="fas fa-pills mr-2"></i>Your Medicines</h4>
+      <div class="loading" id="medicineLoading">
+        <div class="spinner"></div>
+        <p>Loading medicines...</p>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th>Medicine</th>
+              <th>Dose</th>
+              <th>Time</th>
+              <th>Frequency</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="medicineTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="historySection" class="tracker-container">
+      <h4><i class="fas fa-history mr-2"></i>Medicine History</h4>
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <input type="date" id="dateFrom" class="form-control" />
+        </div>
+        <div class="col-md-3">
+          <input type="date" id="dateTo" class="form-control" />
+        </div>
+        <div class="col-md-3">
+          <button onclick="loadHistory()" class="btn btn-primary btn-enhanced">
+            <i class="fas fa-search mr-1"></i>Filter History
+          </button>
+        </div>
+      </div>
+      <div id="historyList"></div>
+    </div>
+
+    <div class="chart-container">
+      <h4><i class="fas fa-chart-bar mr-2"></i>Adherence Analytics</h4>
+      <canvas id="adherenceChart" width="400" height="200"></canvas>
+    </div>
+
+    <div class="tracker-container">
+      <h4><i class="fas fa-chart-pie mr-2"></i>Your Statistics</h4>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div id="userTotalMedicines" class="stat-number">0</div>
+            <p>Total Medicines</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div id="userDosesTaken" class="stat-number">0</div>
+            <p>Doses Taken</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div id="userDosesMissed" class="stat-number">0</div>
+            <p>Doses Missed</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div id="userAdherenceRate" class="stat-number">0%</div>
+            <p>Adherence Rate</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// API Configuration
+const API_BASE = 'http://localhost:3000/api';
+let authToken = localStorage.getItem('authToken');
+let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+let medicines = [];
+let adherenceChart;
+let isRegisterMode = false; // New variable to track current mode
+
+// Utility Functions
+function showAlert(containerId, message, type = 'info') {
+  const container = document.getElementById(containerId);
+  container.innerHTML = `
+    <div class="alert alert-${type} alert-custom alert-dismissible fade show">
+      ${message}
+      <button type="button" class="close" data-dismiss="alert">
+        <span>&times;</span>
+      </button>
+    </div>
+  `;
+  setTimeout(() => {
+    container.innerHTML = '';
+  }, 5000);
+}
+
+function showLoading(elementId, show = true) {
+  const element = document.getElementById(elementId);
+  if (show) {
+    element.classList.add('show');
+  } else {
+    element.classList.remove('show');
+  }
+}
+
+async function apiCall(endpoint, options = {}) {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(authToken && { 'Authorization': `Bearer ${authToken}` })
+    },
+    ...options
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}${endpoint}`, config);
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.error || 'API request failed');
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+}
+
+// Authentication Functions
+async function login() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+
+  if (!username || !password) {
+    showAlert('loginAlert', 'Please enter username and password.', 'warning');
+    return;
+  }
+
+  showLoading('loginLoading', true);
+
+  try {
+    const response = await apiCall('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ username, password })
+    });
+
+    authToken = response.token;
+    currentUser = response.user;
+    
+    localStorage.setItem('authToken', authToken);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+    showPage('mainPage');
+    await loadUserData();
+    showAlert('trackerAlert', `Welcome back, ${currentUser.username}!`, 'success');
+  } catch (error) {
+    showAlert('loginAlert', error.message || 'Login failed', 'danger');
+  } finally {
+    showLoading('loginLoading', false);
+  }
+}
+
+async function register() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const email = document.getElementById('email').value.trim();
+
+  if (!username || !password) {
+    showAlert('loginAlert', 'Username and password are required for registration.', 'warning');
+    return;
+  }
+
+  showLoading('loginLoading', true);
+
+  try {
+    const response = await apiCall('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ username, password, email })
+    });
+
+    // After successful registration, automatically log them in
+    authToken = response.token;
+    currentUser = response.user;
+    
+    localStorage.setItem('authToken', authToken);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+    showAlert('loginAlert', 'Registration successful! You are now logged in.', 'success');
+    showPage('mainPage'); // Go to main page after registration
+    await loadUserData();
+  } catch (error) {
+    showAlert('loginAlert', error.message || 'Registration failed', 'danger');
+  } finally {
+    showLoading('loginLoading', false);
+  }
+}
+
+function logout() {
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('currentUser');
+  authToken = null;
+  currentUser = {};
+  medicines = [];
+  showPage('loginPage');
+  // Reset form and mode when logging out
+  document.getElementById('loginForm').reset();
+  setAuthMode('login'); 
+}
+
+// Function to toggle between login and register mode
+function setAuthMode(mode) {
+    isRegisterMode = (mode === 'register');
+    
+    const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+    const emailGroup = document.getElementById('emailGroup');
+    const registerToggleContainer = document.getElementById('registerToggleContainer');
+    const loginToggleContainer = document.getElementById('loginToggleContainer');
+    const authPrompt = document.getElementById('authPrompt');
+
+    if (isRegisterMode) {
+        loginSubmitBtn.innerHTML = '<i class="fas fa-user-plus mr-2"></i>Register';
+        authPrompt.textContent = 'Create your account';
+        emailGroup.style.display = 'block';
+        registerToggleContainer.style.display = 'none';
+        loginToggleContainer.style.display = 'block';
+    } else {
+        loginSubmitBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Sign In';
+        authPrompt.textContent = 'Sign in to your account';
+        emailGroup.style.display = 'none';
+        document.getElementById('email').value = ''; // Clear email field
+        registerToggleContainer.style.display = 'block';
+        loginToggleContainer.style.display = 'none';
+    }
+}
+
+
+// Page Navigation
+function showPage(pageId) {
+  document.querySelectorAll('.page-container').forEach(page => {
+    page.classList.remove('active');
+  });
+  document.getElementById(pageId).classList.add('active');
+}
+
+function goToMainPage() {
+  showPage('mainPage');
+  updateCounters();
+}
+
+// Medicine Management
+async function loadMedicines() {
+  showLoading('medicineLoading', true);
+  
+  try {
+    medicines = await apiCall('/medicines');
+    renderMedicines();
+    await loadTodaySchedule();
+  } catch (error) {
+    showAlert('trackerAlert', 'Failed to load medicines: ' + error.message, 'danger');
+  } finally {
+    showLoading('medicineLoading', false);
+  }
+}
+
+async function addMedicine(event) {
+  event.preventDefault();
+  
+  const name = document.getElementById('medicineName').value.trim();
+  const dose = document.getElementById('medicineDose').value.trim();
+  const time = document.getElementById('medicineTime').value;
+  const frequency = document.getElementById('medicineFrequency').value;
+  const notes = document.getElementById('medicineNotes').value.trim();
+
+  if (!name || !dose || !time) {
+    showAlert('trackerAlert', 'Please fill all required fields.', 'warning');
+    return;
+  }
+
+  try {
+    const newMedicine = await apiCall('/medicines', {
+      method: 'POST',
+      body: JSON.stringify({ name, dose, time, frequency, notes })
+    });
+
+    medicines.push(newMedicine);
+    renderMedicines();
+    await loadTodaySchedule();
+    await loadUserStats();
+    
+    document.getElementById('medicineForm').reset();
+    showAlert('trackerAlert', 'Medicine added successfully!', 'success');
+  } catch (error) {
+    showAlert('trackerAlert', 'Failed to add medicine: ' + error.message, 'danger');
+  }
+}
+
+
+
+ async function deleteMedicine(medicineId) {
+  try {
+    await apiCall(`/medicines/${medicineId}`, { method: 'DELETE' });
+    medicines = medicines.filter(m => m.id !== medicineId);
+    renderMedicines();
+    await loadTodaySchedule();
+    await loadUserStats();
+    showAlert('trackerAlert', 'Medicine deleted successfully!', 'success');
+  } catch (error) {
+    showAlert('trackerAlert', 'Failed to delete medicine: ' + error.message, 'danger');
+  }
+}
+
+async function recordMedicine(medicineId, status = 'taken') {
+  try {
+    await apiCall(`/medicines/${medicineId}/record`, {
+      method: 'POST',
+      body: JSON.stringify({ status })
+    });
+
+    await loadTodaySchedule(); // Refresh today's schedule to show updated status
+    await loadUserStats();    // Refresh user stats
+    await loadHistory();      // Refresh history
+    updateChart();            // Update adherence chart
+    
+    showAlert('trackerAlert', `Medicine marked as ${status}!`, 'success');
+  } catch (error) {
+    showAlert('trackerAlert', 'Failed to record medicine: ' + error.message, 'danger');
+  }
+}
+
+
+function renderMedicines() {
+  const tbody = document.getElementById('medicineTableBody');
+  tbody.innerHTML = '';
+
+  if (medicines.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No medicines added yet.</td></tr>';
+    return;
+  }
+
+  medicines.forEach(medicine => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${medicine.name}</strong></td>
+      <td>${medicine.dose}</td>
+      <td>${medicine.time}</td>
+      <td><span class="badge badge-info">${medicine.frequency}</span></td>
+      <td><span class="badge badge-secondary">Active</span></td>
+      <td>
+        <button class="btn btn-sm btn-success btn-enhanced mr-1" onclick="recordMedicine(${medicine.id}, 'taken')">
+          <i class="fas fa-check"></i> Taken
+        </button>
+        <button class="btn btn-sm btn-warning btn-enhanced mr-1" onclick="recordMedicine(${medicine.id}, 'missed')">
+          <i class="fas fa-times"></i> Missed
+        </button>
+        <button class="btn btn-sm btn-danger btn-enhanced" onclick="deleteMedicine(${medicine.id})">
+          <i class="fas fa-trash"></i>
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+async function loadTodaySchedule() {
+  try {
+    const schedule = await apiCall('/schedule/today');
+    renderTodaySchedule(schedule);
+  } catch (error) {
+    console.error('Failed to load today\'s schedule:', error);
+    document.getElementById('todaySchedule').innerHTML = '<div class="col-12"><p class="text-muted">Failed to load today\'s schedule.</p></div>';
+  }
+}
+
+function renderTodaySchedule(schedule) {
+  const container = document.getElementById('todaySchedule');
+  container.innerHTML = '';
+
+  if (schedule.length === 0) {
+    container.innerHTML = '<div class="col-12"><p class="text-muted">No medicines scheduled for today.</p></div>';
+    return;
+  }
+
+  schedule.forEach(item => {
+    const col = document.createElement('div');
+    col.className = 'col-md-4 mb-3';
+    
+    const statusClass = item.taken_today ? 'success' : 'warning';
+    const statusIcon = item.taken_today ? 'check-circle' : 'clock';
+    const statusText = item.taken_today ? 'Taken' : 'Pending';
+    
+    col.innerHTML = `
+      <div class="card border-${statusClass}">
+        <div class="card-body">
+          <h6 class="card-title">
+            <i class="fas fa-pills mr-2"></i>${item.name}
+          </h6>
+          <p class="card-text">
+            <small class="text-muted">
+              <i class="fas fa-${statusIcon} mr-1"></i>${statusText}<br>
+              <i class="fas fa-clock mr-1"></i>${item.time}<br>
+              <i class="fas fa-tablets mr-1"></i>${item.dose}
+            </small>
+          </p>
+          ${!item.taken_today ? `
+            <button class="btn btn-sm btn-success btn-enhanced" onclick="recordMedicine(${item.id}, 'taken')">
+              <i class="fas fa-check mr-1"></i>Mark Taken
+            </button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+    container.appendChild(col);
+  });
+}
+
+// History and Analytics
+async function loadHistory() {
+  const dateFrom = document.getElementById('dateFrom').value;
+  const dateTo = document.getElementById('dateTo').value;
+  
+  let query = '';
+  if (dateFrom) query += `?date_from=${dateFrom}`;
+  if (dateTo) query += `${query ? "&" : "?"}date_to=${dateTo}`;
+
+  try {
+    const history = await apiCall(`/history${query}`);
+    renderHistory(history);
+  } catch (error) {
+    showAlert('trackerAlert', 'Failed to load history: ' + error.message, 'danger');
+  }
+}
+
+function renderHistory(history) {
+  const container = document.getElementById('historyList');
+  container.innerHTML = '';
+
+  if (history.length === 0) {
+    container.innerHTML = '<p class="text-muted">No history found for the selected period.</p>';
+    return;
+  }
+
+  history.forEach(record => {
+    const div = document.createElement('div');
+    div.className = 'card mb-2';
+    
+    const statusClass = record.status === 'taken' ? 'success' : 'danger';
+    const statusIcon = record.status === 'taken' ? 'check' : 'times';
+    
+   div.innerHTML = `
+  <div class="card-body py-2">
+    <div class="row align-items-center">
+      <div class="col-md-3">
+        <strong>${record.medicine_name}</strong>
+      </div>
+      <div class="col-md-2">
+        ${record.dose}
+      </div>
+      <div class="col-md-3">
+        ${new Date(record.taken_at).toLocaleString()}
+      </div>
+      <div class="col-md-2">
+        <span class="badge badge-${statusClass}">
+          <i class="fas fa-${statusIcon} mr-1"></i>${record.status}
+        </span>
+      </div>
+      <div class="col-md-2 text-muted small">
+        ${record.notes ? record.notes : ''}
+      </div>
+    </div>
+  </div>
+`;
+container.appendChild(div);
+  }); // ✅ This was missing
+} // 
+
+
+async function loadUserStats() {
+  try {
+    const stats = await apiCall('/stats');
+    updateUserStatsDisplay(stats);
+  } catch (error) {
+    console.error('Failed to load user stats:', error);
+    // Set default values if stats fail to load
+    updateUserStatsDisplay({
+      totalMedicines: 0,
+      totalDosesTaken: 0,
+      totalDosesMissed: 0,
+      adherenceRate: 0
+    });
+  }
+}
+
+function updateUserStatsDisplay(stats) {
+  document.getElementById('userTotalMedicines').textContent = stats.totalMedicines || 0;
+  document.getElementById('userDosesTaken').textContent = stats.totalDosesTaken || 0;
+  document.getElementById('userDosesMissed').textContent = stats.totalDosesMissed || 0;
+  document.getElementById('userAdherenceRate').textContent = `${stats.adherenceRate || 0}%`;
+}
+async function loadUserData() {
+  await Promise.all([
+    loadMedicines(),
+    loadUserStats(),
+    loadHistory()
+  ]);
+  updateCounters(); // Update main page counters with real data after loading
+  updateChart(); // Update chart with real data after loading
+}
+
+function initializeChart() {
+  const ctx = document.getElementById('adherenceChart').getContext('2d');
+  adherenceChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Adherence Rate (%)',
+        data: [],
+        borderColor: '#667eea',
+        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+        tension: 0.4,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 100,
+          title: {
+            display: true,
+            text: 'Adherence Rate (%)'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Date'
+          }
+        }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return `${context.dataset.label}: ${context.raw}%`;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+async function updateChart() {
+  try {
+    // Fetch adherence data over the last 30 days for the chart
+    const adherenceHistory = await apiCall('/history?date_from=' + new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
+
+    // Group history by date and calculate daily adherence
+    const dailyData = {};
+    const allDates = new Set();
+    const today = new Date();
+    
+    for (let i = 0; i < 30; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        allDates.add(date.toISOString().split('T')[0]); // Add all dates in the range
+    }
+
+    adherenceHistory.forEach(record => {
+      const date = new Date(record.taken_at).toISOString().split('T')[0];
+      if (!dailyData[date]) {
+        dailyData[date] = { taken: 0, total: 0 };
+      }
+      if (record.status === 'taken') {
+        dailyData[date].taken++;
+      }
+      dailyData[date].total++;
+    });
+
+    const labels = Array.from(allDates).sort();
+    const data = labels.map(date => {
+      if (dailyData[date]) {
+        return Math.round((dailyData[date].taken / dailyData[date].total) * 100);
+      }
+      return 0; // If no records for a day, assume 0% adherence or handle as needed
+    });
+
+    adherenceChart.data.labels = labels;
+    adherenceChart.data.datasets[0].data = data;
+    adherenceChart.update();
+
+  } catch (error) {
+    console.error('Failed to update chart:', error);
+    // Fallback to random data if API call fails
+    const last7Days = [];
+    const adherenceData = [];
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      last7Days.push(date.toLocaleDateString());
+      adherenceData.push(Math.floor(Math.random() * 40) + 60); // Random data between 60-100%
+    }
+    adherenceChart.data.labels = last7Days;
+    adherenceChart.data.datasets[0].data = adherenceData;
+    adherenceChart.update();
+  }
+}
+
+function updateCounters() {
+  // These counters can now reflect real data from userStats or medicines array
+  const totalMedicines = medicines.length;
+  const dosesTaken = document.getElementById('userDosesTaken').textContent; // Get from user stats
+  const adherenceRate = parseFloat(document.getElementById('userAdherenceRate').textContent); // Get from user stats
+
+  animateCounter('count1', totalMedicines);
+  animateCounter('count2', parseInt(dosesTaken));
+  animateCounter('count3', adherenceRate); 
+  animateCounter('count4', 1); // Still a demo value for active users
+}
+
+function animateCounter(id, target) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  
+  let current = 0;
+  const step = target > 100 ? Math.ceil(target / 100) : 1;
+  const interval = setInterval(() => {
+    current += step;
+    if (current >= target) {
+      current = target;
+      clearInterval(interval);
+    }
+    // Format adherence rate with %
+    element.textContent = (id === "count3" || id === "userAdherenceRate") ? `${current}%` : current;
+  }, 15);
+}
+
+// Event Listeners
+document.getElementById('medicineForm').addEventListener('submit', addMedicine);
+
+// Updated login form submit listener
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (isRegisterMode) {
+    register();
+  } else {
+    login();
+  }
+});
+
+// New event listeners for toggling auth modes
+document.getElementById('registerToggle').addEventListener('click', (e) => {
+    e.preventDefault();
+    setAuthMode('register');
+});
+
+document.getElementById('loginToggle').addEventListener('click', (e) => {
+    e.preventDefault();
+    setAuthMode('login');
+});
+
+
+document.getElementById('getStartedBtn').addEventListener('click', () => {
+  showPage('trackerPage');
+  if (!adherenceChart) {
+    initializeChart(); // Initialize chart only once
+  }
+  loadUserData(); // Load all user-specific data
+});
+
+// Initialize app on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  if (authToken && currentUser.id) {
+    showPage('mainPage');
+    loadUserData(); // Load data if already logged in
+  } else {
+    showPage('loginPage');
+    setAuthMode('login'); // Default to login view
+  }
+  
+  // Set default date filters to last 7 days for history
+  const today = new Date();
+  const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+  document.getElementById('dateTo').value = today.toISOString().split('T')[0];
+  document.getElementById('dateFrom').value = weekAgo.toISOString().split('T')[0];
+});
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('.navigation-wrap');
+  if (nav) { // Check if nav exists (it won't on login page)
+    if (window.scrollY > 10) {
+      nav.classList.add('scroll-on');
+    } else {
+      nav.classList.remove('scroll-on');
+    }
+  }
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>
